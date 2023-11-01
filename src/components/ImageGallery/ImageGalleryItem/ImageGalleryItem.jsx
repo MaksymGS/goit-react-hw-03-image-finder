@@ -69,6 +69,3 @@ export class ImageGalleryItem extends Component {
   }
 }
 
-
-//   // console.log(largeImageURL);
-// };

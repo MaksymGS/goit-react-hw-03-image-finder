@@ -27,9 +27,6 @@ export class App extends Component {
           imageItems: resp.hits,
           loadMore: 1 < Math.ceil(resp.totalHits / 12),
         });
-        console.log(this.state.imageItems);
-        console.log(resp);
-        console.log(this.state.loadMore);
       } catch (error) {
         this.setState({ error: true });
         alert(error.message);
@@ -42,7 +39,6 @@ export class App extends Component {
       try {
         this.setState({ loading: true, error: false });
         const resp = await fetchImages(this.state.searchQuery, this.state.page);
-        console.log(resp.totalHits);
         this.setState({
           imageItems: [...prevState.imageItems, ...resp.hits],
           loadMore: this.state.page < Math.ceil(resp.totalHits / 12),
@@ -57,7 +53,6 @@ export class App extends Component {
   }
 
   changeQuery = values => {
-    console.log(values);
     window.scrollTo(0, 0);
     this.setState({
       searchQuery: values.searchQuery,

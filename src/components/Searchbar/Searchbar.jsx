@@ -17,7 +17,6 @@ export const Searchbar = ({ onChangeQuery }) => {
           page: 1,
         }}
         onSubmit={(values, actions) => {
-          console.log(values);
           onChangeQuery(values);
           actions.resetForm();
         }}
