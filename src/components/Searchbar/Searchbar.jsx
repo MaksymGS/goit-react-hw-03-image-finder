@@ -16,7 +16,6 @@ export const Searchbar = ({ onChangeQuery }) => {
           searchQuery: '',
           page: 1,
         }}
-        // validationSchema={formSchema}
         onSubmit={(values, actions) => {
           console.log(values);
           onChangeQuery(values);
@@ -31,8 +30,8 @@ export const Searchbar = ({ onChangeQuery }) => {
           <StyledInput
             name="searchQuery"
             type="text"
-            // autoComplete="off"
-            // autoFocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
           ></StyledInput>
         </StyledForm>

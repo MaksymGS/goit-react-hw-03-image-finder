@@ -1,9 +1,9 @@
 import { fetchImages } from 'api';
 import React, { Component } from 'react';
-import { ThreeDots } from 'react-loader-spinner';
 import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
+import { Loader } from './Loader/Loader';
 
 export class App extends Component {
   state = {
@@ -20,6 +20,9 @@ export class App extends Component {
       try {
         this.setState({ loading: true, error: false });
         const resp = await fetchImages(this.state.searchQuery, this.state.page);
+        if (resp.hits.length === 0) {
+          alert(`Nothing was found for this query - ${this.state.searchQuery}`);
+        }
         this.setState({
           imageItems: resp.hits,
           loadMore: 1 < Math.ceil(resp.totalHits / 12),
@@ -29,6 +32,7 @@ export class App extends Component {
         console.log(this.state.loadMore);
       } catch (error) {
         this.setState({ error: true });
+        alert(error.message);
       } finally {
         this.setState({ loading: false });
       }
@@ -45,6 +49,7 @@ export class App extends Component {
         });
       } catch (error) {
         this.setState({ error: true });
+        alert(error.message);
       } finally {
         this.setState({ loading: false });
       }
@@ -53,6 +58,7 @@ export class App extends Component {
 
   changeQuery = values => {
     console.log(values);
+    window.scrollTo(0, 0);
     this.setState({
       searchQuery: values.searchQuery,
       page: 1,
@@ -70,16 +76,7 @@ export class App extends Component {
         <Searchbar onChangeQuery={this.changeQuery} />
         {imageItems.length > 0 && <ImageGallery images={imageItems} />}
         {loadMore && !loading && <Button onLoadMore={this.increasePage} />}
-        <ThreeDots
-          height="80"
-          width="80"
-          radius="9"
-          color="#3f51b5"
-          ariaLabel="three-dots-loading"
-          wrapperStyle={{ justifyContent: 'space-around' }}
-          wrapperClassName=""
-          visible={loading}
-        />
+        <Loader isLoading={loading} />
       </>
     );
   }
